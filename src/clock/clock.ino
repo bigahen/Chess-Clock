@@ -3,12 +3,14 @@
 #include <SevenSegmentFun.h>
 #include <SevenSegmentTM1637.h>
 
-const byte PIN_CLK = 2;   // define CLK pin (any digital pin)
-const byte PIN_DIO = 3;   // define DIO pin (any digital pin)
-SevenSegmentTM1637    display(PIN_CLK, PIN_DIO);
+#include "ChessClock.h"
 
-const byte PIN_CLK2 = 4;   // define CLK pin (any digital pin)
-const byte PIN_DIO2 = 5;   // define DIO pin (any digital pin)
+//const byte PIN_CLK = 2;   // define CLK pin (any digital pin)
+//const byte PIN_DIO = 3;   // define DIO pin (any digital pin)
+SevenSegmentTM1637    display(PIN_CLK1, PIN_DIO1);
+
+//const byte PIN_CLK2 = 4;   // define CLK pin (any digital pin)
+//const byte PIN_DIO2 = 5;   // define DIO pin (any digital pin)
 SevenSegmentExtended    display2(PIN_CLK2, PIN_DIO2);
 
 int maxMiniute = 99; 
@@ -19,6 +21,8 @@ int clockTwoMinute = 99;
 
 int clockOneSecond = 0;
 int clockTwoSecond = 59;
+
+ChessClock chessClock (clockOneMinute, clockOneSecond, clockTwoMinute, clockTwoSecond);
 
 // run setup code
 void setup() {
