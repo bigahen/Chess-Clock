@@ -1,25 +1,15 @@
-#include <SevenSegmentAsciiMap.h>
-#include <SevenSegmentExtended.h>
-#include <SevenSegmentFun.h>
-#include <SevenSegmentTM1637.h>
-
 #include "ChessClock.h"
 
-//const byte PIN_CLK = 2;   // define CLK pin (any digital pin)
-//const byte PIN_DIO = 3;   // define DIO pin (any digital pin)
-SevenSegmentTM1637    display(PIN_CLK1, PIN_DIO1);
-
-//const byte PIN_CLK2 = 4;   // define CLK pin (any digital pin)
-//const byte PIN_DIO2 = 5;   // define DIO pin (any digital pin)
-SevenSegmentExtended    display2(PIN_CLK2, PIN_DIO2);
+const byte CLOCK_ONE_BUT_PIN = 2;
+const byte CLOCK_TWO_BUT_PIN = 3;
 
 int maxMiniute = 99; 
 int maxSecond = 59; 
 
-int clockOneMinute = 0;
+int clockOneMinute = 99;
 int clockTwoMinute = 99;
 
-int clockOneSecond = 0;
+int clockOneSecond = 59;
 int clockTwoSecond = 59;
 
 ChessClock chessClock (clockOneMinute, clockOneSecond, clockTwoMinute, clockTwoSecond);
@@ -27,27 +17,22 @@ ChessClock chessClock (clockOneMinute, clockOneSecond, clockTwoMinute, clockTwoS
 // run setup code
 void setup() {
   Serial.begin(9600);         // initializes the Serial connection @ 9600 baud
-  display.begin();            // initializes the display
-  display.setBacklight(50);  // set the brightness to 100 %
-  display.print("INIT");      // display INIT on the display
-  delay(1000);                // wait 1000 ms
 
-  display2.begin();            // initializes the display
-  display2.setBacklight(50);  // set the brightness to 100 %
-  display2.printTime(clockTwoMinute, clockTwoSecond, false); 
+  attachInterrupt(digitalPinToInterrupt(CLOCK_ONE_BUT_PIN),buttonOnePressed,RISING);
+  attachInterrupt(digitalPinToInterrupt(CLOCK_TWO_BUT_PIN),buttonTwoPressed,RISING);    
 };
 
 
 void loop() {
   delay(1000); 
+  chessClock.tick();
 
-  if (clockTwoSecond == 0) {
-    clockTwoSecond = 59; 
-    clockTwoMinute -=1;
-  } else {
-    clockTwoSecond -=1; 
-  }
+}
 
-   display2.printTime(clockTwoMinute, clockTwoSecond, false);
+void buttonOnePressed(){
+  chessClock.buttonPressed(true);
+}
 
+void buttonTwoPressed(){
+  chessClock.buttonPressed(false);
 }
