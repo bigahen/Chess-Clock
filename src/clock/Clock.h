@@ -17,8 +17,12 @@ Clock (uint8_t pinClk, uint8_t pinDIO, uint8_t initMin, uint8_t initSec);
 bool tick();
 
 private:
+
+  void tickSecond();
+  
   uint8_t _min;
   uint8_t _sec;
+  uint8_t _ticks; 
   
   SevenSegmentExtended display;
 

@@ -6,10 +6,10 @@ const byte CLOCK_TWO_BUT_PIN = 3;
 int maxMiniute = 99; 
 int maxSecond = 59; 
 
-int clockOneMinute = 99;
+int clockOneMinute = 5;
 int clockTwoMinute = 99;
 
-int clockOneSecond = 59;
+int clockOneSecond = 0;
 int clockTwoSecond = 59;
 
 ChessClock chessClock (clockOneMinute, clockOneSecond, clockTwoMinute, clockTwoSecond);
@@ -24,7 +24,7 @@ void setup() {
 
 
 void loop() {
-  delay(1000); 
+  delay(1000 / TICKS_PER_SECOND); 
   chessClock.tick();
 
 }
